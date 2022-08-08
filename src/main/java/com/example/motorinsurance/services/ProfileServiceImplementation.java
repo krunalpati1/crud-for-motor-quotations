@@ -21,8 +21,8 @@ public class ProfileServiceImplementation implements ProfileService {
     }
 
     @Override
-    public List<Profile> getProfileByRequestId(String requestId) {
-        return (List<Profile>) profileRepository.findAllById(Collections.singleton(requestId));
+    public Profile getProfileByRequestId(String requestId) {
+        return profileRepository.findByRequestId(requestId);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ProfileServiceImplementation implements ProfileService {
 
     @Override
     public Profile updateProfile(String requestId, Profile profile) {
-        Profile profile1 = profileRepository.findById(requestId).get();
+        Profile profile1 = profileRepository.findByRequestId(requestId);
 
         if(Objects.nonNull(profile1.getVertical()) && !"".equalsIgnoreCase(profile.getVertical())){
             profile1.setVertical(profile.getVertical());

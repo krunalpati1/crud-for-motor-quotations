@@ -7,7 +7,7 @@ import java.util.List;
 public interface ProfileService {
     List<Profile> getAllProfiles();
 
-    List<Profile> getProfileByRequestId(String requestId);
+    Profile getProfileByRequestId(String requestId);
 
     String addProfile(Profile profiles);
 

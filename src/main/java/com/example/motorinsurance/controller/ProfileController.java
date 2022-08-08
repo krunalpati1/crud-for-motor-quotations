@@ -24,7 +24,7 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/profile", params = "requestId")
-    public List<Profile> getProfile(@RequestParam String requestId){
+    public Profile getProfile(@RequestParam String requestId){
         return profileService.getProfileByRequestId(requestId);
     }
 

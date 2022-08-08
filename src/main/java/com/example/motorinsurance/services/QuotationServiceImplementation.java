@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -67,17 +68,20 @@ public class QuotationServiceImplementation implements QuotationService {
 
     @Override
     public ArrayList<Insurer> getAllPremiums(String requestId) {
-        List<Profile> allProfiles = (List<Profile>) profileRepository.findAllById(Collections.singleton(requestId));
-        for(Profile profile : allProfiles){
+        Profile profile = profileRepository.findByRequestId(requestId);
+//        List<Profile> allProfiles = (List<Profile>) profileRepository.findAllById(Collections.singleton(requestId));
+//        for(Profile profile : allProfiles){
             String vertical = profile.getVertical();
             String vehicleMake = profile.getVehicleMake();
             String vehicleModel = profile.getVehicleModel();
+//        }
 
-            
+        List<Quotation> allQuotationsByVehicleMake = quotationRepository.findAllByVehicleMakeAndVehicleModel(vehicleMake, vehicleModel);
+
+        ArrayList<Insurer> allPremiumsList = new ArrayList<>();
+        for(Quotation quotation : allQuotationsByVehicleMake){
+            allPremiumsList.addAll(quotation.getSupportedInsurers());
         }
-
-        List<Quotation> allQuotationsByVertical = quotationRepository.findAllByVertical();
-
-        return quotationRepository.findById(requestId).get().getSupportedInsurers();
+        return allPremiumsList;
     }
 }
