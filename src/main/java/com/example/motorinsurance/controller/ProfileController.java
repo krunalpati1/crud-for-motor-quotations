@@ -30,9 +30,9 @@ public class ProfileController {
 
     @PostMapping("/profile")
     public String addProfile(@RequestBody Profile profile){
-        profileService.addProfile(profile);
+        String requestId = profileService.addProfile(profile);
         System.out.println("Profile created!");
-        return "Profile created!";
+        return requestId;
     }
 
     @PutMapping(value = "/profile", params = "requestId")

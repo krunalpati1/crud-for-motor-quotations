@@ -15,6 +15,8 @@ public class ProfileServiceImplementation implements ProfileService {
     @Autowired
     private ProfileRepository profileRepository;
 
+//    private static String collectionName = "TWCollection";
+
     @Override
     public List<Profile> getAllProfiles() {
         return profileRepository.findAll();
@@ -30,6 +32,14 @@ public class ProfileServiceImplementation implements ProfileService {
         Random rd = new Random();
         String requestId = String.valueOf(Math.abs(rd.nextLong()));
         profile.setRequestId(requestId);
+
+//        String vertical = profile.getVertical();
+//        if(vertical.equalsIgnoreCase("TW")){
+//            profileRepository.setCollectionName("TWCollection");
+//        } else if(vertical.equalsIgnoreCase("FW")){
+//            profileRepository.setCollectionName("FWCollection");
+//        }
+
         profileRepository.save(profile);
         return requestId;
     }
@@ -53,7 +63,16 @@ public class ProfileServiceImplementation implements ProfileService {
         return profile1;
     }
 
-    public void deleteProfile(String requestId) {
-        profileRepository.deleteById(requestId);
+    public String deleteProfile(String requestId) {
+        profileRepository.deleteByRequestId(requestId);
+        return "Profile deleted successfully!";
     }
+
+//    public String getCollectionName(){
+//        return collectionName;
+//    }
+//
+//    public void setCollectionName(String collectionName){
+//        ProfileServiceImplementation.collectionName = collectionName;
+//    }
 }

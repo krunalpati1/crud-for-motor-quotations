@@ -3,6 +3,7 @@ package com.example.motorinsurance.services;
 import com.example.motorinsurance.model.Checkout;
 import com.example.motorinsurance.repository.CheckoutRepository;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,8 @@ public class CheckoutServiceImplementation implements CheckoutService {
     }
 
     @Override
-    public Checkout getCheckoutByCheckoutId(String requestId) {
-        return checkoutRepository.findById(requestId).get();
+    public Checkout getCheckoutByCheckoutId(String checkoutId) {
+        return checkoutRepository.findById(checkoutId).get();
     }
 
     @Override

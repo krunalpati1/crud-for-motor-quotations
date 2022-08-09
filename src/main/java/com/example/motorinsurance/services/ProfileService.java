@@ -1,7 +1,6 @@
 package com.example.motorinsurance.services;
 
 import com.example.motorinsurance.model.Profile;
-
 import java.util.List;
 
 public interface ProfileService {
@@ -13,5 +12,7 @@ public interface ProfileService {
 
     Profile updateProfile(String requestId, Profile profile);
 
-    void deleteProfile(String requestId);
+    String deleteProfile(String requestId);
+
+//    String getCollectionName();
 }
