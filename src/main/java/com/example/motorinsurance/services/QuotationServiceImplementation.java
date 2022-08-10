@@ -1,8 +1,10 @@
 package com.example.motorinsurance.services;
 
+import com.example.motorinsurance.model.CurrentQuotation;
 import com.example.motorinsurance.model.Insurer;
 import com.example.motorinsurance.model.Profile;
 import com.example.motorinsurance.model.Quotation;
+import com.example.motorinsurance.repository.CurrentQuotationRepository;
 import com.example.motorinsurance.repository.ProfileRepository;
 import com.example.motorinsurance.repository.QuotationRepository;
 import lombok.AllArgsConstructor;
@@ -21,6 +23,9 @@ public class QuotationServiceImplementation implements QuotationService {
 
     @Autowired
     private QuotationRepository quotationRepository;
+
+    @Autowired
+    private CurrentQuotationRepository currentQuotationRepository;
 
     @Autowired
     private ProfileRepository profileRepository;
@@ -78,9 +83,12 @@ public class QuotationServiceImplementation implements QuotationService {
 
         List<Quotation> allQuotationsByVehicleMake = quotationRepository.findAllByVehicleMakeAndVehicleModel(vehicleMake, vehicleModel);
 
+
         ArrayList<Insurer> allPremiumsList = new ArrayList<>();
         for(Quotation quotation : allQuotationsByVehicleMake){
             allPremiumsList.addAll(quotation.getSupportedInsurers());
+            CurrentQuotation currentQuotation = new CurrentQuotation(requestId, quotation.getSupportedInsurers());
+            currentQuotationRepository.save(currentQuotation);
         }
         return allPremiumsList;
     }

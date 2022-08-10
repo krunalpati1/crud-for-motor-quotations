@@ -15,5 +15,4 @@ public class Checkout {
     private String email;
     private String phone;
     private String insurer;
-    private String premium;
 }

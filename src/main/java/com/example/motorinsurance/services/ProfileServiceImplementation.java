@@ -1,6 +1,8 @@
 package com.example.motorinsurance.services;
 
 import com.example.motorinsurance.model.Profile;
+import com.example.motorinsurance.repository.CheckoutRepository;
+import com.example.motorinsurance.repository.CurrentQuotationRepository;
 import com.example.motorinsurance.repository.ProfileRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,12 @@ public class ProfileServiceImplementation implements ProfileService {
 
     @Autowired
     private ProfileRepository profileRepository;
+
+    @Autowired
+    private CurrentQuotationRepository currentQuotationRepository;
+
+    @Autowired
+    private CheckoutRepository checkoutRepository;
 
 //    private static String collectionName = "TWCollection";
 
@@ -64,6 +72,8 @@ public class ProfileServiceImplementation implements ProfileService {
     }
 
     public String deleteProfile(String requestId) {
+        currentQuotationRepository.deleteByRequestId(requestId);
+        checkoutRepository.deleteByRequestId(requestId);
         profileRepository.deleteByRequestId(requestId);
         return "Profile deleted successfully!";
     }

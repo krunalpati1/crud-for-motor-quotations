@@ -52,10 +52,6 @@ public class CheckoutServiceImplementation implements CheckoutService {
             checkout1.setInsurer(checkout.getInsurer());
         }
 
-        if (Objects.nonNull(checkout1.getPremium())&&!"".equalsIgnoreCase(checkout.getPremium())){
-            checkout1.setPremium(checkout.getPremium());
-        }
-
         checkoutRepository.save(checkout1);
         return checkout1;
     }
