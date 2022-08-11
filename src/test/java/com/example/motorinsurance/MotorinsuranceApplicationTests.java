@@ -1,10 +1,8 @@
 package com.example.motorinsurance;
 
-import com.example.motorinsurance.model.Checkout;
-import com.example.motorinsurance.model.Insurer;
-import com.example.motorinsurance.model.Profile;
-import com.example.motorinsurance.model.Quotation;
+import com.example.motorinsurance.model.*;
 import com.example.motorinsurance.repository.CheckoutRepository;
+import com.example.motorinsurance.repository.CurrentQuotationRepository;
 import com.example.motorinsurance.repository.ProfileRepository;
 import com.example.motorinsurance.repository.QuotationRepository;
 import com.example.motorinsurance.services.CheckoutServiceImplementation;
@@ -45,6 +43,10 @@ class MotorinsuranceApplicationTests {
 
 	@MockBean
 	private CheckoutRepository checkoutRepository;
+
+	@MockBean
+	private CurrentQuotationRepository currentQuotationRepository;
+
 	@Test
 	public void getAllProfilesTest() {
 		Profile profile1 = new Profile("123lakjsdf", "TW", "bajaj", "pulsar", "123123123");
@@ -61,22 +63,6 @@ class MotorinsuranceApplicationTests {
 
 		when(profileRepository.findByRequestId(requestId)).thenReturn(profile);
 		assertEquals(profile, profileService.getProfileByRequestId(requestId));
-	}
-
-//	@Test
-//	public void addProfileTest() {
-//		Profile profile = new Profile("123lj123lj", "FW", "tata", "punch", "123445155512");
-//
-//		when(profileRepository.save(profile)).thenReturn(profile);
-////		assertEquals(profile.getRequestId().getClass(), profileService.addProfile(profile).getClass());
-//		assertTrue(new ReflectionEquals(profile.getRequestId(), new String[]{"requestId", "id"}).matches(profileService.addProfile(profile)));
-//	}
-
-	@Test
-	public void deleteProfileTest() {
-		String requestId = "123445155512";
-		profileService.deleteProfile(requestId);
-		verify(profileRepository, times(1)).deleteByRequestId(requestId);
 	}
 
 	@Test
@@ -102,16 +88,9 @@ class MotorinsuranceApplicationTests {
 	}
 
 	@Test
-	public void deleteQuotationTest() {
-		String requestId = "123445155512";
-		quotationServiceImplementation.deleteQuotation(requestId);
-		verify(quotationRepository, times(1)).deleteById(requestId);
-	}
-
-	@Test
 	public void getAllCheckoutsTest() {
-		Checkout checkout1 = new Checkout("845477903302113819", "123111115512", "Krunal", "something@email.com", "9999999999", "digit", "2000");
-		Checkout checkout2 = new Checkout("132123123123455155", "123445155512", "Suraj", "something1@email.com", "8888888888", "chol", "8500");
+		Checkout checkout1 = new Checkout("845477903302113819", "123111115512", "Krunal", "something@email.com", "9999999999", "digit");
+		Checkout checkout2 = new Checkout("132123123123455155", "123445155512", "Suraj", "something1@email.com", "8888888888", "chol");
 
 		when(checkoutRepository.findAll()).thenReturn(Stream.of(checkout1, checkout2).collect(Collectors.toList()));
 		assertEquals(2, checkoutServiceImplementation.getAllCheckouts().size());
@@ -120,10 +99,34 @@ class MotorinsuranceApplicationTests {
 	@Test
 	public void getCheckoutByCheckoutIdTest() {
 		String checkoutId = "845477903302113819";
-		Checkout checkout = new Checkout(checkoutId, "123445155512", "Krunal", "something@email.com", "9999999999", "digit", "2000");
+		Checkout checkout = new Checkout(checkoutId, "123445155512", "Krunal", "something@email.com", "9999999999", "digit");
 
 		when(checkoutRepository.findById(checkoutId)).thenReturn(Optional.of(checkout));
 		assertEquals(checkout, checkoutServiceImplementation.getCheckoutByCheckoutId(checkoutId));
+	}
+
+
+//	@Test
+//	public void addProfileTest() {
+//		Profile profile = new Profile("123lj123lj", "FW", "tata", "punch", "123445155512");
+//
+//		when(profileRepository.save(profile)).thenReturn(profile);
+////		assertEquals(profile.getRequestId().getClass(), profileService.addProfile(profile).getClass());
+//		assertTrue(new ReflectionEquals(profile.getRequestId(), new String[]{"requestId", "id"}).matches(profileService.addProfile(profile)));
+//	}
+
+	@Test
+	public void deleteProfileTest() {
+		String requestId = "123445155512";
+		profileService.deleteProfile(requestId);
+		verify(profileRepository, times(1)).deleteByRequestId(requestId);
+	}
+
+	@Test
+	public void deleteQuotationTest() {
+		String requestId = "123445155512";
+		quotationServiceImplementation.deleteQuotation(requestId);
+		verify(quotationRepository, times(1)).deleteById(requestId);
 	}
 
 	@Test

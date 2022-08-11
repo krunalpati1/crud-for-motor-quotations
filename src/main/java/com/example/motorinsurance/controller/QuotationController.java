@@ -5,10 +5,14 @@ import com.example.motorinsurance.model.Profile;
 import com.example.motorinsurance.model.Quotation;
 import com.example.motorinsurance.services.QuotationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/turtle")
@@ -28,10 +32,14 @@ public class QuotationController {
     }
 
     @PostMapping("/quotation")
-    public String addQuotation(@RequestBody Quotation quotation){
-        quotationService.addQuotation(quotation);
-        System.out.println("Quotation created!");
-        return "Quotation created!";
+    public ResponseEntity<?>  addQuotation(@RequestBody Quotation quotation) throws Exception {
+        try {
+            quotationService.addQuotation(quotation);
+            return new ResponseEntity<>("Quotation created!", HttpStatus.CREATED);
+        } catch (Exception e){
+            System.out.println(e.getLocalizedMessage());
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.I_AM_A_TEAPOT);
+        }
     }
 
     @RequestMapping(value = "/quotation", params = "requestId", method = RequestMethod.PUT)
@@ -40,10 +48,14 @@ public class QuotationController {
     }
 
     @DeleteMapping("/quotation")
-    public String deleteQuotation(@RequestParam String requestId){
-        quotationService.deleteQuotation(requestId);
-        System.out.println("Quotation Deleted!");
-        return "Quotation Deleted!";
+    public ResponseEntity<?> deleteQuotation(@RequestParam String requestId){
+        try{
+            quotationService.deleteQuotation(requestId);
+            System.out.println("Quotation Deleted!");
+            return new ResponseEntity<>("Quotation Deleted Successfully", HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.I_AM_A_TEAPOT);
+        }
     }
 
     @GetMapping("/premiums")

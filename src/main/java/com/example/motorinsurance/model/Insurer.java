@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "supportedInsurer")
 @AllArgsConstructor
 public class Insurer {
+
     private String name;
+
     private String premium;
 }

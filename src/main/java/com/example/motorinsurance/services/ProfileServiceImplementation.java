@@ -4,11 +4,22 @@ import com.example.motorinsurance.model.Profile;
 import com.example.motorinsurance.repository.CheckoutRepository;
 import com.example.motorinsurance.repository.CurrentQuotationRepository;
 import com.example.motorinsurance.repository.ProfileRepository;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import lombok.AllArgsConstructor;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Random;
+
 
 @Service
 @AllArgsConstructor
@@ -39,6 +50,10 @@ public class ProfileServiceImplementation implements ProfileService {
     public String addProfile(Profile profile) {
         Random rd = new Random();
         String requestId = String.valueOf(Math.abs(rd.nextLong()));
+
+        while(profileRepository.findByRequestId(requestId) != null){
+            requestId = String.valueOf(Math.abs(rd.nextLong()));
+        }
         profile.setRequestId(requestId);
 
 //        String vertical = profile.getVertical();
