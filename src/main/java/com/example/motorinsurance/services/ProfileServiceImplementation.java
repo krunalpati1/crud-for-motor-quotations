@@ -1,9 +1,11 @@
 package com.example.motorinsurance.services;
 
+import com.example.motorinsurance.model.FWRequest;
 import com.example.motorinsurance.model.Profile;
 import com.example.motorinsurance.repository.CheckoutRepository;
 import com.example.motorinsurance.repository.CurrentQuotationRepository;
 //import com.example.motorinsurance.repository.EventDataRepository;
+import com.example.motorinsurance.repository.FWRequestRepository;
 import com.example.motorinsurance.repository.ProfileRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -22,6 +24,9 @@ public class ProfileServiceImplementation implements ProfileService {
 
     @Autowired
     private ProfileRepository profileRepository;
+
+    @Autowired
+    private FWRequestRepository fwRequestRepository;
 
     @Autowired
     private CurrentQuotationRepository currentQuotationRepository;
@@ -52,19 +57,24 @@ public class ProfileServiceImplementation implements ProfileService {
         Random rd = new Random();
         String requestId = String.valueOf(Math.abs(rd.nextLong()));
 
+
         while(profileRepository.findByRequestId(requestId) != null){
             requestId = String.valueOf(Math.abs(rd.nextLong()));
         }
         profile.setRequestId(requestId);
 
-//        String vertical = profile.getVertical();
-//        if(vertical.equalsIgnoreCase("TW")){
-//            profileRepository.setCollectionName("TWCollection");
-//        } else if(vertical.equalsIgnoreCase("FW")){
-//            profileRepository.setCollectionName("FWCollection");
-//        }
+        String vertical = profile.getVertical();
+        if(vertical.equalsIgnoreCase("TW")){
+            profileRepository.save(profile);
+        } else if(vertical.equalsIgnoreCase("FW")){
+            FWRequest fwRequest = new FWRequest();
+            fwRequest.setVertical(profile.getVertical());
+            fwRequest.setVehicleMake(profile.getVehicleMake());
+            fwRequest.setVehicleModel(profile.getVehicleModel());
+            fwRequest.setRequestId(profile.getRequestId());
+            fwRequestRepository.save(fwRequest);
+        }
 
-        profileRepository.save(profile);
         return requestId;
     }
 
