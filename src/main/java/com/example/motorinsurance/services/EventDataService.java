@@ -1,6 +1,6 @@
-//package com.example.motorinsurance.repository;
+//package com.example.motorinsurance.services;
 //
-//public interface EventDataRepositoryCustom {
+//public interface EventDataService {
 //    String getCollectionName();
 //
 //    void setCollectionName(String collectionName);

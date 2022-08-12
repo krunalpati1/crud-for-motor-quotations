@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "quotation")
 @CompoundIndex(def = "{'vertical': 1, 'vehicleMake': 1, 'vehicleModel': 1}", unique = true)
 public class Quotation {

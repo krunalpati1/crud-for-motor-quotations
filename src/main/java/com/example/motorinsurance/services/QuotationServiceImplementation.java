@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,11 +36,20 @@ public class QuotationServiceImplementation implements QuotationService {
 
     @Override
     public List<Quotation> getQuotationByRequestId(String requestId) {
-        return (List<Quotation>) quotationRepository.findAllById(Collections.singleton(requestId));
+        Profile profile = profileRepository.findByRequestId(requestId);
+        String vehicleMake = profile.getVehicleMake();
+        String vehicleModel = profile.getVehicleModel();
+
+        return quotationRepository.findAllByVehicleMakeAndVehicleModel(vehicleMake, vehicleModel);
     }
 
     @Override
     public void addQuotation(Quotation quotation) {
+        List<Insurer> insurersList = quotation.getSupportedInsurers();
+        int i=0;
+        for(Insurer insurer : insurersList){
+            insurer.setId(String.valueOf(i++));
+        }
         quotationRepository.save(quotation);
     }
 
@@ -76,7 +84,7 @@ public class QuotationServiceImplementation implements QuotationService {
         Profile profile = profileRepository.findByRequestId(requestId);
 //        List<Profile> allProfiles = (List<Profile>) profileRepository.findAllById(Collections.singleton(requestId));
 //        for(Profile profile : allProfiles){
-            String vertical = profile.getVertical();
+//            String vertical = profile.getVertical();
             String vehicleMake = profile.getVehicleMake();
             String vehicleModel = profile.getVehicleModel();
 //        }

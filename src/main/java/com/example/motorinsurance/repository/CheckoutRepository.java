@@ -8,5 +8,5 @@ import java.util.List;
 public interface CheckoutRepository extends MongoRepository<Checkout, String> {
     List<Object> findByRequestId(String requestId);
 
-    String deleteByRequestId(String requestId);
+    void deleteByRequestId(String requestId);
 }

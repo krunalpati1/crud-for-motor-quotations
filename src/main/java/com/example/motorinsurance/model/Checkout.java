@@ -12,6 +12,7 @@ import javax.validation.constraints.*;
 @Data
 @Document(collection = "checkout")
 @AllArgsConstructor
+@NoArgsConstructor
 public class Checkout {
     @Id
     private String checkoutId;

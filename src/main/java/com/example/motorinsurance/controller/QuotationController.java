@@ -27,8 +27,13 @@ public class QuotationController {
     }
 
     @RequestMapping(value = "/quotation", params = "requestId", method = RequestMethod.GET)
-    public List<Quotation> getQuotation(@RequestParam String requestId){
-        return quotationService.getQuotationByRequestId(requestId);
+    public ResponseEntity<?> getQuotation(@RequestParam String requestId) throws Exception {
+        try {
+            return new ResponseEntity<>(quotationService.getQuotationByRequestId(requestId), HttpStatus.OK);
+        } catch (Exception e){
+            System.out.println(e.getLocalizedMessage());
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.I_AM_A_TEAPOT);
+        }
     }
 
     @PostMapping("/quotation")

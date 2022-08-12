@@ -7,10 +7,14 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotBlank;
 
-//@Document(collection = "#{ProfileServiceImplementation.getCollectionName()}")
+//
+
+
+//@Document(collection = "#{profileRepository.getCollectionName()}")
+@Document(collection = "TWRequest")
 @Data
-@Document(collection = "profile")
 @AllArgsConstructor
+@NoArgsConstructor
 public class Profile {
 
     private String id;
@@ -27,5 +31,4 @@ public class Profile {
     @Indexed(unique = true, background = true)
     private String requestId;
 }
-
 

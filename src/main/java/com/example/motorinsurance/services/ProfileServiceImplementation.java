@@ -3,26 +3,21 @@ package com.example.motorinsurance.services;
 import com.example.motorinsurance.model.Profile;
 import com.example.motorinsurance.repository.CheckoutRepository;
 import com.example.motorinsurance.repository.CurrentQuotationRepository;
+//import com.example.motorinsurance.repository.EventDataRepository;
 import com.example.motorinsurance.repository.ProfileRepository;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import lombok.AllArgsConstructor;
-import org.bson.Document;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor
 public class ProfileServiceImplementation implements ProfileService {
 
     @Autowired
@@ -34,7 +29,13 @@ public class ProfileServiceImplementation implements ProfileService {
     @Autowired
     private CheckoutRepository checkoutRepository;
 
-//    private static String collectionName = "TWCollection";
+//    @Autowired
+//    private EventDataRepository eventDataRepository;
+
+//    @Autowired
+//    private EventDataService eventDataService;
+
+//    private String collectionName = "TWCollection";
 
     @Override
     public List<Profile> getAllProfiles() {
