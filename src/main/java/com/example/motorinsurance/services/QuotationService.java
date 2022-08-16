@@ -1,11 +1,8 @@
 package com.example.motorinsurance.services;
 
-import com.example.motorinsurance.model.Insurer;
-import com.example.motorinsurance.model.Profile;
 import com.example.motorinsurance.model.Quotation;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public interface QuotationService {
     List<Quotation> getAllQuotations();
@@ -18,5 +15,5 @@ public interface QuotationService {
 
     void deleteQuotation(String requestId);
 
-    ArrayList<Insurer> getAllPremiums(String requestId);
+    Map<String, Object> getAllPremiums(String requestId);
 }

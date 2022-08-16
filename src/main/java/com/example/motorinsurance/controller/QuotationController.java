@@ -1,7 +1,5 @@
 package com.example.motorinsurance.controller;
 
-import com.example.motorinsurance.model.Insurer;
-import com.example.motorinsurance.model.Profile;
 import com.example.motorinsurance.model.Quotation;
 import com.example.motorinsurance.services.QuotationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +61,16 @@ public class QuotationController {
     }
 
     @GetMapping("/premiums")
-    public ArrayList<Insurer> getAllPremiums(@RequestParam String requestId){
-        return quotationService.getAllPremiums(requestId);
+    public ResponseEntity<?> getAllPremiums(@RequestParam String requestId){
+        try{
+//            Map<String, String> response = new HashMap<String, String>() {{
+//                put("Data", "Profile not found");
+//            }};
+
+            Map<String, Object> insurersList = quotationService.getAllPremiums(requestId);
+            return new ResponseEntity<>(insurersList, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.I_AM_A_TEAPOT);
+        }
     }
 }
